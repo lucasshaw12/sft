@@ -34,6 +34,9 @@ $RECYCLE.BIN/
 # CUSTOM MADE - PREVENTS UNNEEDED FILES BEING COMMITTED/PUSHED
 # =========================
 
+# Test files
+tests/test.py
+
 # Txt Files
 *.txt
 *.log
