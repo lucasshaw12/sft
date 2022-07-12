@@ -18,7 +18,6 @@ import csv
 def download_uk_housing_data(raw_csv_data):
     # Download then save UK housing price data
 
-    print('downloading UK housing price data...'.upper(), end='')
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     res = requests.get(raw_csv_data)
@@ -34,7 +33,7 @@ def download_uk_housing_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK housing price data - DONE - time taken = {end_time}\n'.upper())
 
     return raw_csv_data
 
@@ -42,7 +41,6 @@ def download_uk_housing_data(raw_csv_data):
 def organise_uk_housing_data():
     # Parse, clean and organise all csv data
 
-    print('cleaning UK housing price data...'.upper(), end='')
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     # Read the raw csv  data
@@ -63,7 +61,7 @@ def organise_uk_housing_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK housing price data - DONE - time taken = {end_time}\n'.upper())
 
 ##########################################
 # Download raw data for UK electricity prices
@@ -73,7 +71,6 @@ def organise_uk_housing_data():
 def download_uk_electric_data(raw_csv_data):
     # Download then save UK electricity CPI (Consumer Price Index 2015=100) price data
 
-    print('downloading UK electricity data...'.upper(), end='')
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     res = requests.get(raw_csv_data)
@@ -90,7 +87,7 @@ def download_uk_electric_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK electricity CPI price data - DONE - time taken = {end_time}\n'.upper())
 
     return raw_csv_data
 
@@ -120,4 +117,4 @@ def organise_uk_electric_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK electricity CPI price data - DONE - time taken = {end_time}\n'.upper())
