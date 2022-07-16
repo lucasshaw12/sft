@@ -41,14 +41,8 @@ tests/test.py
 *.txt
 *.log
 
-# Google API credentials
-token.json
-Google API key.rtf
-credentials-sheets.json
-quickstart.py
-token-drive.pickle
-token-sheets.pickle
-credentials.json
+# zip files
+*.zip
 
 # xlsx files
 *.xlsx
