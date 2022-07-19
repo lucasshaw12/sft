@@ -1,5 +1,5 @@
 #! python
-# Main script
+# Main script to run from terminal
 
 import functions  # custom-made functions.py file to be used as module
 import threading
@@ -35,3 +35,30 @@ organise_data_thread_3.start()
 
 time.sleep(1)
 print('done.'.upper())
+
+##########################################
+# END
+##########################################
+
+##########################################
+# Convert .csv files to .xlsx files for chart/graph plotting prep
+##########################################
+
+# filepath of .csv files
+
+housing_csv_file = '../raw data/housingprices/cleanukaveragehouseprice.csv'
+electric_cpi_csv = '../raw data/electricdata/cleanukcpielectricindex.csv'
+uk_cpi_csv = '../raw data/cpi/ukcpi.csv'
+
+convert_data_thread_1 = threading.Thread(target=functions.convert_csv_to_excel, args=[housing_csv_file])  # Housing .csv file
+convert_data_thread_2 = threading.Thread(target=functions.convert_csv_to_excel, args=[electric_cpi_csv])  # UK cpi .csv file
+convert_data_thread_3 = threading.Thread(target=functions.convert_csv_to_excel, args=[uk_cpi_csv])  # UK electricity CPI .csv file
+convert_data_thread_1.start()
+convert_data_thread_2.start()
+convert_data_thread_3.start()
+print('done'.upper())
+
+##########################################
+# END
+##########################################
+

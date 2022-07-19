@@ -7,6 +7,7 @@ import datetime
 import csv
 from pathlib import Path
 import zipfile
+import openpyxl
 
 ##################################################
 #   Gathering and organising raw data
@@ -194,23 +195,26 @@ def organise_uk_cpi_data():
 
 
 ##################################################
-#   Plotting graphs for csv data
+# Converting .csv files to .xlsx files
 ##################################################
 
+def convert_csv_to_excel(csv_file):
+    # Convert .csv files to .xlsx in preparation for chart/graph plot
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+
+    with open(csv_file) as f:
+        reader = csv.reader(f)
+        for row in reader:
+            ws.append(row)
+
+        xlsx_file = csv_file.rstrip('.csv') + '.xlsx'
+        wb.save(xlsx_file)
+
+    print(f'converted {os.path.basename(csv_file)} to .xlsx format'.upper())
+
 ##########################################
-# Graphs for housing data
+# Plotting .xlsx files to chart/graphs
 ##########################################
 
-# TODO
-
-##########################################
-# Graphs for electric data
-##########################################
-
-# TODO
-
-##########################################
-# Graphs for uk cpi data
-##########################################
-
-# TODO
