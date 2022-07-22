@@ -4,8 +4,10 @@
 import functions  # custom-made functions.py file to be used as module
 import threading
 import time
+import datetime
 
-print('starting program... \n'.upper())
+print('starting program...'.upper())
+start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
 ##########################################
 # Download and organise/clean raw data
@@ -30,7 +32,8 @@ download_data_thread_3.start()
 download_data_thread_4.start()
 download_data_thread_5.start()
 
-time.sleep(1)
+print()
+time.sleep(5)
 
 organise_data_thread_1 = threading.Thread(target=functions.organise_uk_housing_data)
 organise_data_thread_2 = threading.Thread(target=functions.organise_uk_electric_cpi_change_data)
@@ -43,7 +46,8 @@ organise_data_thread_3.start()
 organise_data_thread_4.start()
 organise_data_thread_5.start()
 
-time.sleep(1)
+print()
+time.sleep(5)
 
 ##########################################
 # END
@@ -61,6 +65,8 @@ uk_cpi_csv = '../raw data/cpi/ukcpi.csv'
 gas_cpi_change_csv = '../raw data/gasdata/cleanukcpigasindex.csv'
 water_cpi_change_csv = '../raw data/watersupplydata/cleanukcpiwaterindex.csv'
 
+print()
+
 convert_data_thread_1 = threading.Thread(target=functions.convert_csv_to_excel, args=[housing_csv_file])  # Housing .csv file
 convert_data_thread_2 = threading.Thread(target=functions.convert_csv_to_excel, args=[electric_cpi_change_csv])  # UK cpi .csv file
 convert_data_thread_3 = threading.Thread(target=functions.convert_csv_to_excel, args=[uk_cpi_csv])  # UK electricity CPI .csv file
@@ -72,7 +78,10 @@ convert_data_thread_3.start()
 convert_data_thread_4.start()
 convert_data_thread_5.start()
 
-print('done'.upper())
+time.sleep(3)
+
+end_time = datetime.datetime.now() - start_time
+print(f'\ndone - time taken to run full program = {end_time}'.upper())
 
 ##########################################
 # END

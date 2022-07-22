@@ -36,7 +36,7 @@ def download_uk_housing_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK housing price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK housing price data - DONE - time taken = {end_time}'.upper())
 
     return raw_csv_data
 
@@ -64,7 +64,7 @@ def organise_uk_housing_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK housing price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK housing price data - DONE - time taken = {end_time}'.upper())
 
 ##########################################
 # Download and organise raw data for UK electricity cpi index
@@ -89,7 +89,7 @@ def download_uk_electric_cpi_change_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK electricity CPI price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
 
     return raw_csv_data
 
@@ -117,7 +117,7 @@ def organise_uk_electric_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK electricity CPI price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
 
 
 ##########################################
@@ -142,7 +142,7 @@ def download_uk_gas_cpi_change_price(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK gas CPI price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK gas CPI price data - DONE - time taken = {end_time}'.upper())
 
     return raw_csv_data
 
@@ -170,7 +170,7 @@ def organise_uk_gas_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK gas CPI price data - DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK gas CPI price data - DONE - time taken = {end_time}'.upper())
 
 
 ##########################################
@@ -196,7 +196,7 @@ def download_uk_water_cpi_change_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK water supply data - DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK water supply data - DONE - time taken = {end_time}'.upper())
 
     return raw_csv_data
 
@@ -224,7 +224,7 @@ def organise_uk_water_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK water supply data - DONE - time taken = {end_time}\n'.upper())
+    print(f'organised UK water supply data - DONE - time taken = {end_time}'.upper())
 
 ##########################################
 # Download and organise raw data for UK consumer price index CPI
@@ -247,7 +247,7 @@ def download_uk_cpi_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK Consumer price index (CPI) data - DONE - time taken = {end_time}\n'.upper())
+    print(f'downloaded UK Consumer price index (CPI) data - DONE - time taken = {end_time}'.upper())
 
     return raw_csv_data
 
@@ -285,7 +285,7 @@ def organise_uk_cpi_data():
         csv_file_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'unzipped and organised UK CPI data - DONE - time taken = {end_time}\n'.upper())
+    print(f'unzipped and organised UK CPI data - DONE - time taken = {end_time}'.upper())
 
 
 ##########################################
@@ -305,7 +305,7 @@ def organise_uk_cpi_data():
 ##################################################
 
 def convert_csv_to_excel(csv_file):
-    # Convert .csv files to .xlsx in preparation for chart/graph plot
+    # Convert .csv files to .xlsx in preparation for chart plotting
 
     wb = openpyxl.Workbook()
     ws = wb.active
