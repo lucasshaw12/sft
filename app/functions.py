@@ -8,10 +8,9 @@ import csv
 from pathlib import Path
 import zipfile
 import openpyxl
-
-##################################################
-#   Gathering and organising raw data
-##################################################
+import feedparser
+import docx
+import re
 
 ##########################################
 # Download and organise raw data for UK housing prices
@@ -65,6 +64,11 @@ def organise_uk_housing_data():
 
     end_time = datetime.datetime.now() - start_time
     print(f'organised UK housing price data - DONE - time taken = {end_time}'.upper())
+
+
+##########################################
+# END
+##########################################
 
 ##########################################
 # Download and organise raw data for UK electricity cpi index
@@ -121,6 +125,10 @@ def organise_uk_electric_cpi_change_data():
 
 
 ##########################################
+# END
+##########################################
+
+##########################################
 # Download and organise raw data for UK gas cpi index
 ##########################################
 
@@ -174,6 +182,10 @@ def organise_uk_gas_cpi_change_data():
 
 
 ##########################################
+# END
+##########################################
+
+##########################################
 # Download and organise raw data for UK water supply cpi index
 ##########################################
 
@@ -225,6 +237,11 @@ def organise_uk_water_cpi_change_data():
 
     end_time = datetime.datetime.now() - start_time
     print(f'organised UK water supply data - DONE - time taken = {end_time}'.upper())
+
+
+##########################################
+# END
+##########################################
 
 ##########################################
 # Download and organise raw data for UK consumer price index CPI
@@ -289,6 +306,10 @@ def organise_uk_cpi_data():
 
 
 ##########################################
+# END
+##########################################
+
+##########################################
 # Download and organise T212 personal holdings
 ##########################################
 
@@ -299,6 +320,9 @@ def organise_uk_cpi_data():
 # def organise_t212_data():
 #     pass
 
+##########################################
+# END
+##########################################
 
 ##################################################
 # Converting .csv files to .xlsx files
@@ -306,6 +330,8 @@ def organise_uk_cpi_data():
 
 def convert_csv_to_excel(csv_file):
     # Convert .csv files to .xlsx in preparation for chart plotting
+
+    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     wb = openpyxl.Workbook()
     ws = wb.active
@@ -318,9 +344,73 @@ def convert_csv_to_excel(csv_file):
         xlsx_file = csv_file.rstrip('.csv') + '.xlsx'
         wb.save(xlsx_file)
 
-    print(f'converted {os.path.basename(csv_file)} to .xlsx format'.upper())
+    end_time = datetime.datetime.now() - start_time
+    print(f'converted {os.path.basename(csv_file)} to .xlsx format - time taken = {end_time}'.upper())
+
+
+##########################################
+# END
+##########################################
+
+##########################################
+# RSS Feeds
+##########################################
+
+
+def download_bbc_rss_feed(rss_feed_url):
+    # Download RSS feed data from the BBC and write to a .docx file
+    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+
+    data = feedparser.parse(rss_feed_url)
+    i = 0
+
+    # Create word doc
+    doc = docx.Document()
+
+    # Create news folder
+    os.makedirs('../newsfeeds/bbcnews', exist_ok=True)
+
+    # Regular expression to provide respective topic name to word doc header and filename
+    topic_regex = re.compile(r'''(
+    	((http|https)://[A-Za-z.]+/[A-Za-z]+/) # pre topic url 'http://feeds.bbci.co.uk/news/'
+    	([A-Za-z_]+) # topic name in url i.e 'business'
+    	(/\w{3}\.\w{3})  # post topic url '/rss.xml'
+    	)''', re.VERBOSE)
+    topic_mo = topic_regex.search(rss_feed_url)
+    topic_name = topic_mo.group(4)  # Topic name to insert into filename
+
+    try:
+        doc.add_heading('BBC ' + topic_name.title() + ' News', 1)
+        while i < 10:  # Find first 10 articles
+            # Store text variable to write to word document
+            feed_title_str = data['entries'][i]["title"]
+            feed_description_str = data['entries'][i]['description']
+            feed_description_link = data['entries'][i]['link']
+
+            doc.add_paragraph(feed_title_str, 'Heading 3')
+            doc.add_paragraph(feed_description_str)
+            doc.add_paragraph(feed_description_link, 'Normal')
+            doc.add_paragraph()
+
+            i = i + 1  # Move to the next article
+
+        doc.save(f'../newsfeeds/bbcnews/bbc_news_{topic_name}.docx')
+
+        end_time = datetime.datetime.now() - start_time
+        print(f'current bbc news articles saved to ../newsfeeds/bbcnews/bbc_news_{topic_name}.docx - time taken = {end_time}'.upper())
+
+    except:
+        print(f'***error unable to access BBC feed for "{topic_name}" news***'.upper())
+
+
+##########################################
+# END
+##########################################
 
 ##########################################
 # Plotting .xlsx files to chart/graphs
 ##########################################
 
+##########################################
+# END
+##########################################

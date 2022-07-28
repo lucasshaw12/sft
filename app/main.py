@@ -81,9 +81,38 @@ convert_data_thread_5.start()
 time.sleep(3)
 
 end_time = datetime.datetime.now() - start_time
-print(f'\ndone - time taken to run full program = {end_time}'.upper())
 
 ##########################################
 # END
 ##########################################
 
+##########################################
+# RSS Feeds
+##########################################
+
+# BBC RSS Feeds url
+
+bbc_business_feed = 'http://feeds.bbci.co.uk/news/business/rss.xml'
+bbc_technology_feed = 'http://feeds.bbci.co.uk/news/technology/rss.xml'
+bbc_science_and_environment_feed = 'http://feeds.bbci.co.uk/news/science_and_environment/rss.xml'
+bbc_politics_feed = 'http://feeds.bbci.co.uk/news/politics/rss.xml'
+bbc_world_feed = 'http://feeds.bbci.co.uk/news/world/rss.xml'
+bbc_health_feed = 'http://feeds.bbci.co.uk/news/health/rss.xml'
+bbc_education_feed = 'http://feeds.bbci.co.uk/news/education/rss.xml'
+bbc_uk_feed = 'http://feeds.bbci.co.uk/news/uk/rss.xml'
+
+functions.download_bbc_rss_feed(bbc_business_feed)
+functions.download_bbc_rss_feed(bbc_education_feed)
+functions.download_bbc_rss_feed(bbc_technology_feed)
+functions.download_bbc_rss_feed(bbc_science_and_environment_feed)
+functions.download_bbc_rss_feed(bbc_politics_feed)
+functions.download_bbc_rss_feed(bbc_world_feed)
+functions.download_bbc_rss_feed(bbc_health_feed)
+functions.download_bbc_rss_feed(bbc_education_feed)
+functions.download_bbc_rss_feed(bbc_uk_feed)
+print()
+##########################################
+# END
+##########################################
+
+print(f'\ndone - time taken to run full program = {end_time}'.upper())
