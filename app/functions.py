@@ -379,29 +379,90 @@ def download_bbc_rss_feed(rss_feed_url):
     topic_mo = topic_regex.search(rss_feed_url)
     topic_name = topic_mo.group(4)  # Topic name to insert into filename
 
-    try:
-        doc.add_heading('BBC ' + topic_name.title() + ' News', 1)
-        while i < 10:  # Find first 10 articles
-            # Store text variable to write to word document
-            feed_title_str = data['entries'][i]["title"]
-            feed_description_str = data['entries'][i]['description']
-            feed_description_link = data['entries'][i]['link']
+    doc.add_heading('BBC ' + topic_name.title() + ' News', 1)
+    while i < 10:  # Find first 10 articles
+        # Store text variable to write to word document
+        feed_title_str = data['entries'][i]["title"]
+        feed_description_str = data['entries'][i]['description']
+        feed_description_link = data['entries'][i]['link']
 
-            doc.add_paragraph(feed_title_str, 'Heading 3')
-            doc.add_paragraph(feed_description_str)
-            doc.add_paragraph(feed_description_link, 'Normal')
-            doc.add_paragraph()
+        doc.add_paragraph(feed_title_str, 'Heading 3')
+        doc.add_paragraph(feed_description_str)
+        doc.add_paragraph(feed_description_link, 'Normal')
+        doc.add_paragraph()
 
-            i = i + 1  # Move to the next article
+        i = i + 1  # Move to the next article
 
-        doc.save(f'../newsfeeds/bbcnews/bbc_news_{topic_name}.docx')
+    doc.save(f'../newsfeeds/bbcnews/bbc_news_{topic_name}.docx')
 
-        end_time = datetime.datetime.now() - start_time
-        print(f'current bbc news articles saved to ../newsfeeds/bbcnews/bbc_news_{topic_name}.docx - time taken = {end_time}'.upper())
+    end_time = datetime.datetime.now() - start_time
+    print(f'current bbc news articles saved to ../newsfeeds/bbcnews/bbc_news_{topic_name}.docx - time taken = {end_time}'.upper())
 
-    except:
-        print(f'***error unable to access BBC feed for "{topic_name}" news***'.upper())
 
+def download_investing_rss_feed(rss_feed_url):
+    # Download RSS feed data from the BBC and write to a .docx file
+    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+
+    data = feedparser.parse(rss_feed_url)
+    i = 0
+
+    # Create word doc
+    doc = docx.Document()
+
+    # Create news folder
+    os.makedirs('../newsfeeds/investing.com', exist_ok=True)
+
+    while i < 10:  # Find first 10 articles
+        # Store text variable to write to word document
+        feed_title_str = data['entries'][i]["title"]
+        feed_pubdate = data['entries'][i]['published']
+        feed_link = data['entries'][i]['link']
+
+        doc.add_paragraph(feed_title_str, 'Heading 3')
+        doc.add_paragraph(feed_pubdate, 'Normal')
+        doc.add_paragraph(feed_link, 'Normal')
+        doc.add_paragraph()
+
+        i = i + 1  # Move to the next article
+
+    doc.save(f'../newsfeeds/investing.com/investingnews.docx')
+
+    end_time = datetime.datetime.now() - start_time
+    print(f'current investing.com news articles saved to ../newsfeeds/investing.com/investingnews.docx - time taken = {end_time}'.upper())
+
+
+def download_morningstar_rss_feed(rss_feed_url):
+    # Download RSS feed data from the BBC and write to a .docx file
+    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+
+    data = feedparser.parse(rss_feed_url)
+    i = 0
+
+    # Create word doc
+    doc = docx.Document()
+
+    # Create news folder
+    os.makedirs('../newsfeeds/morningstar', exist_ok=True)
+
+    while i < 10:  # Find first 10 articles
+        # Store text variable to write to word document
+        feed_title = data['entries'][i]["title"]
+        # feed_description = data['entries'][i]['description']
+        feed_link = data['entries'][i]['link']
+        feed_pubdate = data['entries'][i]['published']
+
+        doc.add_paragraph(feed_title, 'Heading 3')
+        # doc.add_paragraph(feed_description, 'Normal')
+        doc.add_paragraph(feed_pubdate, 'Normal')
+        doc.add_paragraph(feed_link, 'Normal')
+        doc.add_paragraph()
+
+        i = i + 1  # Move to the next article
+
+    doc.save(f'../newsfeeds/morningstar/investingnews.docx')
+
+    end_time = datetime.datetime.now() - start_time
+    print(f'current morningstar news articles saved to ../newsfeeds/morningstar/morningstar.docx - time taken = {end_time}'.upper())
 
 ##########################################
 # END
