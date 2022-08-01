@@ -80,8 +80,6 @@ convert_data_thread_5.start()
 
 time.sleep(3)
 
-end_time = datetime.datetime.now() - start_time
-
 ##########################################
 # END
 ##########################################
@@ -128,4 +126,6 @@ investing_feed_data_thread.start()
 # END
 ##########################################
 
+end_time = datetime.datetime.now() - start_time
+time.sleep(2)
 print(f'\ndone - time taken to run full program = {end_time}'.upper())

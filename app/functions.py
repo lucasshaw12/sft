@@ -11,6 +11,7 @@ import openpyxl
 import feedparser
 import docx
 import re
+import send2trash
 
 ##########################################
 # Download and organise raw data for UK housing prices
@@ -48,17 +49,17 @@ def organise_uk_housing_data():
     # Read the raw csv  data
     with open('../raw data/housingprices/ukaveragehouseprice.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'England (pop)', 'Wales (pop)', 'Scotland (pop)', 'NI (pop)'])  # Create own headers
-        csvRows = []
+        csv_rows = []
         for row in dict_reader:
             if dict_reader.line_num < 11:  # remove irrelevant rows of data from file
                 continue
-            csvRows.append(row)
+            csv_rows.append(row)
 
     # Write out the csv file to a clean file
     csv_obj = open(os.path.join('../raw data/housingprices', 'cleanukaveragehouseprice.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'England (pop)', 'Wales (pop)', 'Scotland (pop)', 'NI (pop)'])
     csv_writer.writeheader()
-    for row in csvRows:
+    for row in csv_rows:
         csv_writer.writerow(row)
     csv_obj.close()
 
@@ -106,17 +107,17 @@ def organise_uk_electric_cpi_change_data():
     # Read the raw csv  data
     with open('../raw data/electricdata/ukcpielectricindex.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
-        csvRows = []
+        csv_rows = []
         for row in dict_reader:
             if dict_reader.line_num < 9 or dict_reader.line_num > 42:  # remove irrelevant rows of data from file
                 continue
-            csvRows.append(row)
+            csv_rows.append(row)
 
     # Write out the csv file to a clean file
     csv_obj = open(os.path.join('../raw data/electricdata', 'cleanukcpielectricindex.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
-    for row in csvRows:
+    for row in csv_rows:
         csv_writer.writerow(row)
     csv_obj.close()
 
@@ -163,17 +164,17 @@ def organise_uk_gas_cpi_change_data():
     # Read the raw csv  data
     with open('../raw data/gasdata/ukcpigasindex.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
-        csvRows = []
+        csv_rows = []
         for row in dict_reader:
             if dict_reader.line_num < 9 or dict_reader.line_num > 42:  # remove irrelevant rows of data from file
                 continue
-            csvRows.append(row)
+            csv_rows.append(row)
 
     # Write out the csv file to a clean file
     csv_obj = open(os.path.join('../raw data/gasdata', 'cleanukcpigasindex.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
-    for row in csvRows:
+    for row in csv_rows:
         csv_writer.writerow(row)
     csv_obj.close()
 
@@ -221,17 +222,17 @@ def organise_uk_water_cpi_change_data():
     # Read the raw csv  data
     with open('../raw data/watersupplydata/ukcpiwaterindex.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
-        csvRows = []
+        csv_rows = []
         for row in dict_reader:
             if dict_reader.line_num < 9 or dict_reader.line_num > 42:  # remove irrelevant rows of data from file
                 continue
-            csvRows.append(row)
+            csv_rows.append(row)
 
     # Write out the csv file to a clean file
     csv_obj = open(os.path.join('../raw data/watersupplydata', 'cleanukcpiwaterindex.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
-    for row in csvRows:
+    for row in csv_rows:
         csv_writer.writerow(row)
     csv_obj.close()
 
@@ -280,9 +281,16 @@ def organise_uk_cpi_data():
     data_zip = zipfile.ZipFile(p / 'ukcpi.zip')
     data_zip.extractall(p)
 
-    # Get the .csv file (CPI file only) from the .zip extracted folder
-    for filename in p.glob('API*.csv'):
-        uk_cpi_file = filename
+    # Organise files from the downloaded then extracted 'ukcpi.zip' file
+    for folder, subfolder, files in os.walk(p):
+        for file in files:
+            if file.startswith('API'):
+                uk_cpi_file = os.path.join(folder, file)
+
+            if file.startswith('Meta'):
+                filepath = os.path.join(folder, file)
+                print(f'Deleted unused files {filepath}')
+                send2trash.send2trash(filepath)  # Send unused files to bin
 
     # Read the csv file
     csv_rows = []
