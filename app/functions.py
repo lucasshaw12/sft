@@ -11,10 +11,9 @@ import feedparser
 import docx
 import re
 import send2trash
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+from fpdf import FPDF
 
 ##########################################
 # Download and organise raw data for UK housing prices
@@ -356,8 +355,8 @@ def transpose_xlsx(xlsx_file_to_transpose):
     df = pd.read_excel(xlsx_file_to_transpose, header=None)
     df = df.T  # Transpose the dataframe
     df.columns = df.iloc[0]  # Cut the first row
-    df.columns = ['Date', 'Value']
-    df = df[4:]  # ignore the first row
+    df.columns = ['Date', 'Value']  # Create column headers
+    df = df[4:]  # ignore the first few rows
     df.to_excel('../raw data/cpi/clean_ukcpi.xlsx', index=False)
 
 ##########################################
@@ -399,6 +398,29 @@ def plot_graph_from_excel(xlsx_file_to_plot):
     end_time = datetime.datetime.now() - start_time
     print(f'plotted graph from {os.path.basename(xlsx_file_to_plot)} to {os.path.basename(chart_filename)}- time '
           f'taken = {end_time}'.upper())
+
+
+def display_stock_chart_pdf():
+    # Add the stock chart .png files to a PDF
+    start_time = datetime.datetime.now()
+    pdf = FPDF()
+
+    # Find all .png files
+    image_list = []
+    for folder, subfolder, files in os.walk('../charts'):
+        for file in files:
+            if file.endswith('.png'):
+                png_filename = os.path.join(folder, file)
+                image_list.append(png_filename)  # append all images to image_list
+
+    for image in image_list:
+        pdf.add_page()
+        pdf.image(image, 10, 10, 150, 150)
+    pdf.output("../charts/uk_economic_data.pdf", "F")
+
+    end_time = datetime.datetime.now() - start_time
+    print(f'pdf charts complete from {os.path.basename(str(files[1:]))}- time taken = {end_time}'.upper())
+
 
 ##########################################
 # END

@@ -142,6 +142,9 @@ functions.plot_graph_from_excel(cpi_excel_file_to_plot)
 functions.plot_graph_from_excel(electric_excel_file_to_plot)
 functions.plot_graph_from_excel(gas_excel_file_to_plot)
 functions.plot_graph_from_excel(water_excel_file_to_plot)
+
+functions.display_stock_chart_pdf()
+
 ##########################################
 # END
 ##########################################
