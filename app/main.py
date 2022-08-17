@@ -59,24 +59,24 @@ time.sleep(5)
 
 # filepath of .csv files
 
-housing_csv_file = '../raw data/housingprices/cleanukaveragehouseprice.csv'
-electric_cpi_change_csv = '../raw data/electricdata/cleanukcpielectricindex.csv'
+housing_csv_file = '../raw data/housingprices/clean_uk_average_house_price.csv'
+electric_cpi_change_csv = '../raw data/electricdata/clean_uk_cpi_electric_index.csv'
 uk_cpi_csv = '../raw data/cpi/ukcpi.csv'
-gas_cpi_change_csv = '../raw data/gasdata/cleanukcpigasindex.csv'
-water_cpi_change_csv = '../raw data/watersupplydata/cleanukcpiwaterindex.csv'
+gas_cpi_change_csv = '../raw data/gasdata/clean_uk_cpi_gas_index.csv'
+water_cpi_change_csv = '../raw data/watersupplydata/clean_uk_cpi_water_index.csv'
 
 print()
 
-convert_data_thread_1 = threading.Thread(target=functions.convert_csv_to_excel, args=[housing_csv_file])  # Housing .csv file
-convert_data_thread_2 = threading.Thread(target=functions.convert_csv_to_excel, args=[electric_cpi_change_csv])  # UK cpi .csv file
-convert_data_thread_3 = threading.Thread(target=functions.convert_csv_to_excel, args=[uk_cpi_csv])  # UK electricity CPI .csv file
-convert_data_thread_4 = threading.Thread(target=functions.convert_csv_to_excel, args=[gas_cpi_change_csv])  # UK gas CPI .csv file
-convert_data_thread_5 = threading.Thread(target=functions.convert_csv_to_excel, args=[water_cpi_change_csv])  # UK water supply CPI .csv file
-convert_data_thread_1.start()
-convert_data_thread_2.start()
-convert_data_thread_3.start()
-convert_data_thread_4.start()
-convert_data_thread_5.start()
+convert_filetype_data_thread_1 = threading.Thread(target=functions.convert_csv_to_excel, args=[housing_csv_file])  # Housing .csv file
+convert_filetype_data_thread_2 = threading.Thread(target=functions.convert_csv_to_excel, args=[electric_cpi_change_csv])  # UK cpi .csv file
+convert_filetype_data_thread_3 = threading.Thread(target=functions.convert_csv_to_excel, args=[uk_cpi_csv])  # UK electricity CPI .csv file
+convert_filetype_data_thread_4 = threading.Thread(target=functions.convert_csv_to_excel, args=[gas_cpi_change_csv])  # UK gas CPI .csv file
+convert_filetype_data_thread_5 = threading.Thread(target=functions.convert_csv_to_excel, args=[water_cpi_change_csv])  # UK water supply CPI .csv file
+convert_filetype_data_thread_1.start()
+convert_filetype_data_thread_2.start()
+convert_filetype_data_thread_3.start()
+convert_filetype_data_thread_4.start()
+convert_filetype_data_thread_5.start()
 
 time.sleep(3)
 
@@ -122,6 +122,26 @@ bbc_rss_data_thread_2.start()
 bbc_rss_data_thread_1.start()
 morningstar_feed_data_thread.start()
 investing_feed_data_thread.start()
+##########################################
+# END
+##########################################
+
+
+##########################################
+# PLOTTING EXCEL CHARTS
+##########################################
+
+housing_excel_file_to_plot = '../raw data/housingprices/clean_uk_average_house_price.xlsx'
+cpi_excel_file_to_plot = '../raw data/cpi/clean_ukcpi.xlsx'
+electric_excel_file_to_plot = '../raw data/electricdata/clean_uk_cpi_electric_index.xlsx'
+gas_excel_file_to_plot = '../raw data/gasdata/clean_uk_cpi_gas_index.xlsx'
+water_excel_file_to_plot = '../raw data/watersupplydata/clean_uk_cpi_water_index.xlsx'
+
+functions.plot_graph_from_excel(housing_excel_file_to_plot)
+functions.plot_graph_from_excel(cpi_excel_file_to_plot)
+functions.plot_graph_from_excel(electric_excel_file_to_plot)
+functions.plot_graph_from_excel(gas_excel_file_to_plot)
+functions.plot_graph_from_excel(water_excel_file_to_plot)
 ##########################################
 # END
 ##########################################

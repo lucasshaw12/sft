@@ -7,11 +7,14 @@ import datetime
 import csv
 from pathlib import Path
 import zipfile
-import openpyxl
 import feedparser
 import docx
 import re
 import send2trash
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 ##########################################
 # Download and organise raw data for UK housing prices
@@ -30,7 +33,7 @@ def download_uk_housing_data(raw_csv_data):
     os.makedirs('../raw data/housingprices', exist_ok=True)
 
     # Download the .csv file data
-    raw_data_file = open(os.path.join('../raw data/housingprices', 'ukaveragehouseprice.csv'), 'wb')
+    raw_data_file = open(os.path.join('../raw data/housingprices', 'uk_average_house_price.csv'), 'wb')
     for chunk in res.iter_content(100000):
         raw_data_file.write(chunk)
     raw_data_file.close()
@@ -47,8 +50,9 @@ def organise_uk_housing_data():
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     # Read the raw csv  data
-    with open('../raw data/housingprices/ukaveragehouseprice.csv') as csv_file:
-        dict_reader = csv.DictReader(csv_file, ['Date', 'England (pop)', 'Wales (pop)', 'Scotland (pop)', 'NI (pop)'])  # Create own headers
+    with open('../raw data/housingprices/uk_average_house_price.csv') as csv_file:
+        dict_reader = csv.DictReader(csv_file, ['Date', 'England (pop)', 'Wales (pop)', 'Scotland (pop)',
+                                                'NI (pop)'])  # Create own headers
         csv_rows = []
         for row in dict_reader:
             if dict_reader.line_num < 11:  # remove irrelevant rows of data from file
@@ -56,7 +60,7 @@ def organise_uk_housing_data():
             csv_rows.append(row)
 
     # Write out the csv file to a clean file
-    csv_obj = open(os.path.join('../raw data/housingprices', 'cleanukaveragehouseprice.csv'), 'w', newline='')
+    csv_obj = open(os.path.join('../raw data/housingprices', 'clean_uk_average_house_price.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'England (pop)', 'Wales (pop)', 'Scotland (pop)', 'NI (pop)'])
     csv_writer.writeheader()
     for row in csv_rows:
@@ -88,7 +92,7 @@ def download_uk_electric_cpi_change_data(raw_csv_data):
     os.makedirs('../raw data/electricdata', exist_ok=True)
 
     # Download the .csv file data
-    raw_data_file = open(os.path.join('../raw data/electricdata', 'ukcpielectricindex.csv'), 'wb')
+    raw_data_file = open(os.path.join('../raw data/electricdata', 'uk_cpi_electric_index.csv'), 'wb')
     for chunk in res.iter_content(100000):
         raw_data_file.write(chunk)
     raw_data_file.close()
@@ -105,7 +109,7 @@ def organise_uk_electric_cpi_change_data():
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     # Read the raw csv  data
-    with open('../raw data/electricdata/ukcpielectricindex.csv') as csv_file:
+    with open('../raw data/electricdata/uk_cpi_electric_index.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
         csv_rows = []
         for row in dict_reader:
@@ -114,7 +118,7 @@ def organise_uk_electric_cpi_change_data():
             csv_rows.append(row)
 
     # Write out the csv file to a clean file
-    csv_obj = open(os.path.join('../raw data/electricdata', 'cleanukcpielectricindex.csv'), 'w', newline='')
+    csv_obj = open(os.path.join('../raw data/electricdata', 'clean_uk_cpi_electric_index.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
     for row in csv_rows:
@@ -145,7 +149,7 @@ def download_uk_gas_cpi_change_price(raw_csv_data):
     os.makedirs('../raw data/gasdata', exist_ok=True)
 
     # Download the .csv file data
-    raw_data_file = open(os.path.join('../raw data/gasdata', 'ukcpigasindex.csv'), 'wb')
+    raw_data_file = open(os.path.join('../raw data/gasdata', 'uk_cpi_gas_index.csv'), 'wb')
     for chunk in res.iter_content(100000):
         raw_data_file.write(chunk)
     raw_data_file.close()
@@ -162,7 +166,7 @@ def organise_uk_gas_cpi_change_data():
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     # Read the raw csv  data
-    with open('../raw data/gasdata/ukcpigasindex.csv') as csv_file:
+    with open('../raw data/gasdata/uk_cpi_gas_index.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
         csv_rows = []
         for row in dict_reader:
@@ -171,7 +175,7 @@ def organise_uk_gas_cpi_change_data():
             csv_rows.append(row)
 
     # Write out the csv file to a clean file
-    csv_obj = open(os.path.join('../raw data/gasdata', 'cleanukcpigasindex.csv'), 'w', newline='')
+    csv_obj = open(os.path.join('../raw data/gasdata', 'clean_uk_cpi_gas_index.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
     for row in csv_rows:
@@ -203,7 +207,7 @@ def download_uk_water_cpi_change_data(raw_csv_data):
     os.makedirs('../raw data/watersupplydata', exist_ok=True)
 
     # Download the .csv file data
-    raw_data_file = open(os.path.join('../raw data/watersupplydata', 'ukcpiwaterindex.csv'), 'wb')
+    raw_data_file = open(os.path.join('../raw data/watersupplydata', 'uk_cpi_water_index.csv'), 'wb')
     for chunk in res.iter_content(100000):
         raw_data_file.write(chunk)
     raw_data_file.close()
@@ -220,7 +224,7 @@ def organise_uk_water_cpi_change_data():
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     # Read the raw csv  data
-    with open('../raw data/watersupplydata/ukcpiwaterindex.csv') as csv_file:
+    with open('../raw data/watersupplydata/uk_cpi_water_index.csv') as csv_file:
         dict_reader = csv.DictReader(csv_file, ['Date', 'Value'])  # Create own headers
         csv_rows = []
         for row in dict_reader:
@@ -229,7 +233,7 @@ def organise_uk_water_cpi_change_data():
             csv_rows.append(row)
 
     # Write out the csv file to a clean file
-    csv_obj = open(os.path.join('../raw data/watersupplydata', 'cleanukcpiwaterindex.csv'), 'w', newline='')
+    csv_obj = open(os.path.join('../raw data/watersupplydata', 'clean_uk_cpi_water_index.csv'), 'w', newline='')
     csv_writer = csv.DictWriter(csv_obj, ['Date', 'Value'])
     csv_writer.writeheader()
     for row in csv_rows:
@@ -259,7 +263,7 @@ def download_uk_cpi_data(raw_csv_data):
     os.makedirs('../raw data/cpi', exist_ok=True)
 
     # Download the .zip file data
-    raw_data_file = open(os.path.join('../raw data/cpi', 'ukcpi.zip'), 'wb')
+    raw_data_file = open(os.path.join('../raw data/cpi', 'uk_cpi.zip'), 'wb')
     for chunk in res.iter_content(100000):
         raw_data_file.write(chunk)
     raw_data_file.close()
@@ -272,13 +276,11 @@ def download_uk_cpi_data(raw_csv_data):
 
 def organise_uk_cpi_data():
     # Unzip, clean and read the cpi .csv file
-
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
-
     p = Path('../raw data/cpi/')
 
     # Unzip the .zip file
-    data_zip = zipfile.ZipFile(p / 'ukcpi.zip')
+    data_zip = zipfile.ZipFile(p / 'uk_cpi.zip')
     data_zip.extractall(p)
 
     # Organise files from the downloaded then extracted 'ukcpi.zip' file
@@ -303,7 +305,7 @@ def organise_uk_cpi_data():
         csv_file.close()
 
         # Write out the csv file
-        csv_file_obj = open(os.path.join(p, 'ukcpi.csv'), 'w', newline='')
+        csv_file_obj = open(os.path.join(p, 'uk_cpi.csv'), 'w', newline='')
         csv_writer = csv.writer(csv_file_obj)
         for row in csv_rows:
             csv_writer.writerow(row)
@@ -333,28 +335,70 @@ def organise_uk_cpi_data():
 ##########################################
 
 ##################################################
-# Converting .csv files to .xlsx files
+# Manipulating .csv files to .xlsx files
 ##################################################
 
 def convert_csv_to_excel(csv_file):
     # Convert .csv files to .xlsx in preparation for chart plotting
-
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
-    wb = openpyxl.Workbook()
-    ws = wb.active
-
-    with open(csv_file) as f:
-        reader = csv.reader(f)
-        for row in reader:
-            ws.append(row)
-
-        xlsx_file = csv_file.rstrip('.csv') + '.xlsx'
-        wb.save(xlsx_file)
+    df = pd.read_csv(csv_file)
+    xlsx_file = csv_file.rstrip('.csv') + '.xlsx'  # create filename for xlsx file
+    df.to_excel(xlsx_file, index=None, header=True)  # save xlsx file
 
     end_time = datetime.datetime.now() - start_time
     print(f'converted {os.path.basename(csv_file)} to .xlsx format - time taken = {end_time}'.upper())
 
+
+def transpose_xlsx(xlsx_file_to_transpose):
+    # Used for the cpi.xlsx file due to horizontal format - created for matplotlib chart
+    # Transpose, create a header then remove unused rows
+    df = pd.read_excel(xlsx_file_to_transpose, header=None)
+    df = df.T  # Transpose the dataframe
+    df.columns = df.iloc[0]  # Cut the first row
+    df.columns = ['Date', 'Value']
+    df = df[4:]  # ignore the first row
+    df.to_excel('../raw data/cpi/clean_ukcpi.xlsx', index=False)
+
+##########################################
+# END
+##########################################
+
+##########################################
+# Plotting .xlsx files to chart/graphs
+##########################################
+
+def plot_graph_from_excel(xlsx_file_to_plot):
+    # Plot a graph using a .xlsx file
+    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+    df = pd.read_excel(xlsx_file_to_plot)
+    df.head()
+
+    os.makedirs('../charts/', exist_ok=True)
+
+    # Chart header
+    filename = os.path.basename(xlsx_file_to_plot).rstrip('xlsx').lstrip('clean_')
+    file_string = re.sub(r'(?<=[a-z])_(?=[a-z])', ' ', filename)
+
+    plt.rcParams['axes.labelsize'] = 8
+    plt.rcParams['axes.titlesize'] = 8
+
+    plt.figure(figsize=(20, 9), dpi=100)  # Set chart size
+    df.plot.line('Date')
+    plt.title(file_string.title(), fontsize=10)
+    plt.ylabel(f'{file_string.title()} (£)')  # y axis label
+    plt.annotate('Sourced from ons.gov.uk', (0, 0), (-80, -80),
+                 fontsize=8,
+                 xycoords='axes fraction', textcoords='offset points', va='top')  # to display data source
+    plt.grid(True, color='k', linestyle=':')
+    plt.xticks(rotation=90, fontsize=8)
+
+    chart_filename = filename.rstrip('xlsx') + 'png'  # create filename for chart image
+    plt.savefig(os.path.join('../charts/', os.path.basename(chart_filename)), bbox_inches='tight')
+
+    end_time = datetime.datetime.now() - start_time
+    print(f'plotted graph from {os.path.basename(xlsx_file_to_plot)} to {os.path.basename(chart_filename)}- time '
+          f'taken = {end_time}'.upper())
 
 ##########################################
 # END
@@ -472,14 +516,9 @@ def download_morningstar_rss_feed(rss_feed_url):
     end_time = datetime.datetime.now() - start_time
     print(f'current morningstar news articles saved to ../newsfeeds/morningstar/morningstar.docx - time taken = {end_time}'.upper())
 
-##########################################
-# END
-##########################################
-
-##########################################
-# Plotting .xlsx files to chart/graphs
-##########################################
 
 ##########################################
 # END
 ##########################################
+
+
