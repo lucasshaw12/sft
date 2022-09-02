@@ -14,6 +14,8 @@ import send2trash
 import pandas as pd
 import matplotlib.pyplot as plt
 from fpdf import FPDF
+import time
+import datetime
 
 ##########################################
 # Download and organise raw data for UK housing prices
@@ -386,7 +388,7 @@ def plot_graph_from_excel(xlsx_file_to_plot):
     df.plot.line('Date')
     plt.title(file_string.title(), fontsize=10)
     plt.ylabel(f'{file_string.title()} (£)')  # y axis label
-    plt.annotate('Sourced from ons.gov.uk', (0, 0), (-80, -80),
+    plt.annotate(f'Sourced from ons.gov.uk. Last updated on {time.ctime()}', (0, 0), (-80, -80),
                  fontsize=8,
                  xycoords='axes fraction', textcoords='offset points', va='top')  # to display data source
     plt.grid(True, color='k', linestyle=':')
