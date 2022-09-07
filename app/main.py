@@ -98,7 +98,7 @@ bbc_world_feed = 'http://feeds.bbci.co.uk/news/world/rss.xml'
 bbc_health_feed = 'http://feeds.bbci.co.uk/news/health/rss.xml'
 bbc_education_feed = 'http://feeds.bbci.co.uk/news/education/rss.xml'
 bbc_uk_feed = 'http://feeds.bbci.co.uk/news/uk/rss.xml'
-morningstar_feed = 'https://uk.investing.com/rss/market_overview.rss'
+# morningstar_feed = ''
 investing_feed = 'https://uk.investing.com/rss/market_overview.rss'
 
 bbc_rss_data_thread_1 = threading.Thread(target = functions.download_bbc_rss_feed, args=[bbc_business_feed])
@@ -109,7 +109,7 @@ bbc_rss_data_thread_5 = threading.Thread(target = functions.download_bbc_rss_fee
 bbc_rss_data_thread_6 = threading.Thread(target = functions.download_bbc_rss_feed, args=[bbc_uk_feed])
 bbc_rss_data_thread_7 = threading.Thread(target = functions.download_bbc_rss_feed, args=[bbc_education_feed])
 bbc_rss_data_thread_8 = threading.Thread(target = functions.download_bbc_rss_feed, args=[bbc_health_feed])
-morningstar_feed_data_thread = threading.Thread(target = functions.download_morningstar_rss_feed, args=[morningstar_feed])
+# morningstar_feed_data_thread = threading.Thread(target = functions.download_morningstar_rss_feed, args=[morningstar_feed])
 investing_feed_data_thread = threading.Thread(target = functions.download_investing_rss_feed, args=[investing_feed])
 
 bbc_rss_data_thread_8.start()
@@ -120,8 +120,9 @@ bbc_rss_data_thread_4.start()
 bbc_rss_data_thread_3.start()
 bbc_rss_data_thread_2.start()
 bbc_rss_data_thread_1.start()
-morningstar_feed_data_thread.start()
+# morningstar_feed_data_thread.start()
 investing_feed_data_thread.start()
+print()
 ##########################################
 # END
 ##########################################

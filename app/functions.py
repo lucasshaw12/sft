@@ -436,6 +436,7 @@ def display_stock_chart_pdf():
 def download_bbc_rss_feed(rss_feed_url):
     # Download RSS feed data from the BBC and write to a .docx file
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+    last_updated_time = time.ctime()
 
     data = feedparser.parse(rss_feed_url)
     i = 0
@@ -463,6 +464,7 @@ def download_bbc_rss_feed(rss_feed_url):
         feed_description_link = data['entries'][i]['link']
 
         doc.add_paragraph(feed_title_str, 'Heading 3')
+        doc.add_paragraph(f'Last updated on: {last_updated_time}')
         doc.add_paragraph(feed_description_str)
         doc.add_paragraph(feed_description_link, 'Normal')
         doc.add_paragraph()
@@ -507,38 +509,38 @@ def download_investing_rss_feed(rss_feed_url):
     print(f'current investing.com news articles saved to ../newsfeeds/investing.com/investingnews.docx - time taken = {end_time}'.upper())
 
 
-def download_morningstar_rss_feed(rss_feed_url):
-    # Download RSS feed data from the BBC and write to a .docx file
-    start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
-
-    data = feedparser.parse(rss_feed_url)
-    i = 0
-
-    # Create word doc
-    doc = docx.Document()
-
-    # Create news folder
-    os.makedirs('../newsfeeds/morningstar', exist_ok=True)
-
-    while i < 10:  # Find first 10 articles
-        # Store text variable to write to word document
-        feed_title = data['entries'][i]["title"]
-        # feed_description = data['entries'][i]['description']
-        feed_link = data['entries'][i]['link']
-        feed_pubdate = data['entries'][i]['published']
-
-        doc.add_paragraph(feed_title, 'Heading 3')
-        # doc.add_paragraph(feed_description, 'Normal')
-        doc.add_paragraph(feed_pubdate, 'Normal')
-        doc.add_paragraph(feed_link, 'Normal')
-        doc.add_paragraph()
-
-        i = i + 1  # Move to the next article
-
-    doc.save(f'../newsfeeds/morningstar/investingnews.docx')
-
-    end_time = datetime.datetime.now() - start_time
-    print(f'current morningstar news articles saved to ../newsfeeds/morningstar/morningstar.docx - time taken = {end_time}'.upper())
+# def download_morningstar_rss_feed(rss_feed_url):
+#     # Download RSS feed data from Morningstar and write to a .docx file
+#     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
+#
+#     data = feedparser.parse(rss_feed_url)
+#     i = 0
+#
+#     # Create word doc
+#     doc = docx.Document()
+#
+#     # Create news folder
+#     os.makedirs('../newsfeeds/morningstar', exist_ok=True)
+#
+#     while i < 10:  # Find first 10 articles
+#         # Store text variable to write to word document
+#         feed_title = data['entries'][i]["title"]
+#         # feed_description = data['entries'][i]['description']
+#         feed_link = data['entries'][i]['link']
+#         feed_pubdate = data['entries'][i]['published']
+#
+#         doc.add_paragraph(feed_title, 'Heading 3')
+#         # doc.add_paragraph(feed_description, 'Normal')
+#         doc.add_paragraph(feed_pubdate, 'Normal')
+#         doc.add_paragraph(feed_link, 'Normal')
+#         doc.add_paragraph()
+#
+#         i = i + 1  # Move to the next article
+#
+#     doc.save(f'../newsfeeds/morningstar/investingnews.docx')
+#
+#     end_time = datetime.datetime.now() - start_time
+#     print(f'current morningstar news articles saved to ../newsfeeds/morningstar/morningstar.docx - time taken = {end_time}'.upper())
 
 
 ##########################################
