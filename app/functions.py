@@ -3,7 +3,6 @@
 
 import requests
 import os
-import datetime
 import csv
 from pathlib import Path
 import zipfile
@@ -16,14 +15,20 @@ import matplotlib.pyplot as plt
 from fpdf import FPDF
 import time
 import datetime
+import sys
+
 
 ##########################################
 # Download and organise raw data for UK housing prices
 ##########################################
 
 
-def download_uk_housing_data(raw_csv_data):
-    # Download then save UK housing price data
+def download_uk_housing_data(raw_csv_data: str) -> str:
+    """Download then save UK housing price data.
+    :param raw_csv_data: the url which contains the .csv file of raw data.
+    :type raw_csv_data: str
+    :returns: str of the downloaded filename
+    """
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -40,13 +45,14 @@ def download_uk_housing_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK housing price data - DONE - time taken = {end_time}'.upper())
-
+    sys.stdout.write(f'downloaded UK housing price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
     return raw_csv_data
 
 
 def organise_uk_housing_data():
-    # Parse, clean and organise csv data
+    """Parse, clean then organise csv data.
+    Specific to this data only, as raw .csv is unique."""
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -69,7 +75,8 @@ def organise_uk_housing_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK housing price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.write(f'organised UK housing price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -81,8 +88,12 @@ def organise_uk_housing_data():
 ##########################################
 
 
-def download_uk_electric_cpi_change_data(raw_csv_data):
-    # Download UK electricity CPI (Consumer Price Index 2015=100) price data
+def download_uk_electric_cpi_change_data(raw_csv_data: str) -> str:
+    """Download UK electricity CPI (Consumer Price Index 2015=100) price data
+    :param raw_csv_data: the url which contains the .csv file of raw data.
+    :type raw_csv_data: str
+    :returns: str of the downloaded filename
+    """
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -99,13 +110,14 @@ def download_uk_electric_cpi_change_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
-
+    sys.stdout.write(f'downloaded UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
     return raw_csv_data
 
 
 def organise_uk_electric_cpi_change_data():
-    # Parse, clean and organise csv data
+    """Parse, clean then organise csv data.
+    Specific to this data only, as raw .csv is unique."""
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -127,7 +139,8 @@ def organise_uk_electric_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.write(f'organised UK electricity CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -139,7 +152,11 @@ def organise_uk_electric_cpi_change_data():
 ##########################################
 
 def download_uk_gas_cpi_change_price(raw_csv_data):
-    # Download UK gas CPI (Consumer Price Index 2015=100) price data
+    """Download UK gas CPI (Consumer Price Index 2015=100) price data
+    :param raw_csv_data: the url which contains the .csv file of raw data.
+    :type raw_csv_data: str
+    :returns: str of the downloaded filename
+    """
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -156,13 +173,14 @@ def download_uk_gas_cpi_change_price(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK gas CPI price data - DONE - time taken = {end_time}'.upper())
-
+    sys.stdout.write(f'downloaded UK gas CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
     return raw_csv_data
 
 
 def organise_uk_gas_cpi_change_data():
-    # Parse, clean and organise csv data
+    """Parse, clean then organise csv data.
+    Specific to this data only, as raw .csv is unique."""
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -184,7 +202,8 @@ def organise_uk_gas_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK gas CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.write(f'organised UK gas CPI price data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -197,7 +216,11 @@ def organise_uk_gas_cpi_change_data():
 
 
 def download_uk_water_cpi_change_data(raw_csv_data):
-    # Download then save UK water cpi data
+    """Download then save UK water cpi data
+    :param raw_csv_data: the url which contains the .csv file of raw data.
+    :type raw_csv_data: str
+    :returns: str of the downloaded filename
+    """
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -214,13 +237,14 @@ def download_uk_water_cpi_change_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK water supply data - DONE - time taken = {end_time}'.upper())
-
+    sys.stdout.write(f'downloaded UK water supply data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
     return raw_csv_data
 
 
 def organise_uk_water_cpi_change_data():
-    # Parse, clean and organise csv data
+    """Parse, clean then organise csv data.
+    Specific to this data only, as raw .csv is unique."""
 
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
@@ -242,7 +266,8 @@ def organise_uk_water_cpi_change_data():
     csv_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'organised UK water supply data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.write(f'organised UK water supply data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -255,6 +280,11 @@ def organise_uk_water_cpi_change_data():
 
 
 def download_uk_cpi_data(raw_csv_data):
+    """Download then save UK water cpi data
+    :param raw_csv_data: the url which contains the .csv file of raw data.
+    :type raw_csv_data: str
+    :returns: str of the downloaded filename
+    """
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     res = requests.get(raw_csv_data)
@@ -270,13 +300,15 @@ def download_uk_cpi_data(raw_csv_data):
     raw_data_file.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'downloaded UK Consumer price index (CPI) data - DONE - time taken = {end_time}'.upper())
-
+    sys.stdout.write(f'downloaded UK Consumer price index (CPI) data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
     return raw_csv_data
 
 
 def organise_uk_cpi_data():
-    # Unzip, clean and read the cpi .csv file
+    """Unzip, parse, clean then organise csv data.
+    Specific to this data only, as raw .csv is unique."""
+
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
     p = Path('../raw data/cpi/')
 
@@ -313,7 +345,8 @@ def organise_uk_cpi_data():
         csv_file_obj.close()
 
     end_time = datetime.datetime.now() - start_time
-    print(f'unzipped and organised UK CPI data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.write(f'unzipped and organised UK CPI data - DONE - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -339,8 +372,11 @@ def organise_uk_cpi_data():
 # Manipulating .csv files to .xlsx files
 ##################################################
 
-def convert_csv_to_excel(csv_file):
-    # Convert .csv files to .xlsx in preparation for chart plotting
+def convert_csv_to_excel(csv_file: str):
+    """Convert .csv files to .xlsx in preparation for chart plotting.
+    :param csv_file: The file location of the spreadsheet (.csv) file.
+    """
+
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     df = pd.read_csv(csv_file)
@@ -348,18 +384,22 @@ def convert_csv_to_excel(csv_file):
     df.to_excel(xlsx_file, index=None, header=True)  # save xlsx file
 
     end_time = datetime.datetime.now() - start_time
-    print(f'converted {os.path.basename(csv_file)} to .xlsx format - time taken = {end_time}'.upper())
+    sys.stdout.write(f'converted {os.path.basename(csv_file)} to .xlsx format - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
-def transpose_xlsx(xlsx_file_to_transpose):
-    # Used for the cpi.xlsx file due to horizontal format - created for matplotlib chart
-    # Transpose, create a header then remove unused rows
+def transpose_xlsx(xlsx_file_to_transpose: str):
+    """Used on the 'ukcpi.csv' file due to horizontal format - created for matplotlib chart
+    Transpose, create a header then remove unused rows.
+    :param xlsx_file_to_transpose: The file location of the spreadsheet (.xlsx) file."""
+
     df = pd.read_excel(xlsx_file_to_transpose, header=None)
     df = df.T  # Transpose the dataframe
     df.columns = df.iloc[0]  # Cut the first row
     df.columns = ['Date', 'Value']  # Create column headers
     df = df[4:]  # ignore the first few rows
     df.to_excel('../raw data/cpi/clean_ukcpi.xlsx', index=False)
+
 
 ##########################################
 # END
@@ -369,15 +409,17 @@ def transpose_xlsx(xlsx_file_to_transpose):
 # Plotting .xlsx files to chart/graphs
 ##########################################
 
-def plot_graph_from_excel(xlsx_file_to_plot):
-    # Plot a graph using a .xlsx file
+def plot_graph_from_excel(xlsx_file_to_plot: str):
+    """Plot a graph using a .xlsx file.
+    :param xlsx_file_to_plot: The file location of the spreadsheet (.xlsx) which shall be plotted."""
+
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
     df = pd.read_excel(xlsx_file_to_plot)
     df.head()
 
     os.makedirs('../charts/', exist_ok=True)
 
-    # Chart header
+    # Chart header name
     filename = os.path.basename(xlsx_file_to_plot).rstrip('xlsx').lstrip('clean_')
     file_string = re.sub(r'(?<=[a-z])_(?=[a-z])', ' ', filename)
 
@@ -398,12 +440,15 @@ def plot_graph_from_excel(xlsx_file_to_plot):
     plt.savefig(os.path.join('../charts/', os.path.basename(chart_filename)), bbox_inches='tight')
 
     end_time = datetime.datetime.now() - start_time
-    print(f'plotted graph from {os.path.basename(xlsx_file_to_plot)} to {os.path.basename(chart_filename)}- time '
-          f'taken = {end_time}'.upper())
+    sys.stdout.write(
+        f'plotted graph from {os.path.basename(xlsx_file_to_plot)} to {os.path.basename(chart_filename)}- time '
+        f'taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 def display_stock_chart_pdf():
-    # Add the stock chart .png files to a PDF
+    """Add the stock chart .png files to a single PDF for ease of viewing."""
+
     start_time = datetime.datetime.now()
     pdf = FPDF()
 
@@ -421,7 +466,8 @@ def display_stock_chart_pdf():
     pdf.output("../charts/uk_economic_data.pdf", "F")
 
     end_time = datetime.datetime.now() - start_time
-    print(f'pdf charts complete from {os.path.basename(str(files[1:]))}- time taken = {end_time}'.upper())
+    sys.stdout.write(f'pdf charts complete from {os.path.basename(str(files[1:]))}- time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 ##########################################
@@ -433,8 +479,12 @@ def display_stock_chart_pdf():
 ##########################################
 
 
-def download_bbc_rss_feed(rss_feed_url):
-    # Download RSS feed data from the BBC and write to a .docx file
+def download_bbc_rss_feed(rss_feed_url: str):
+    """Download RSS feed data from the BBC and write to a .docx file.
+    Used for all BBC RSS feed categories ie education, politics, health etc.
+    :param rss_feed_url: url of the RSS feed location
+    """
+
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
     last_updated_time = time.ctime()
 
@@ -457,6 +507,7 @@ def download_bbc_rss_feed(rss_feed_url):
     topic_name = topic_mo.group(4)  # Topic name to insert into filename
 
     doc.add_heading('BBC ' + topic_name.title() + ' News', 1)
+    doc.add_paragraph(f'Last updated on: {last_updated_time}')
     while i < 10:  # Find first 10 articles
         # Store text variable to write to word document
         feed_title_str = data['entries'][i]["title"]
@@ -464,7 +515,6 @@ def download_bbc_rss_feed(rss_feed_url):
         feed_description_link = data['entries'][i]['link']
 
         doc.add_paragraph(feed_title_str, 'Heading 3')
-        doc.add_paragraph(f'Last updated on: {last_updated_time}')
         doc.add_paragraph(feed_description_str)
         doc.add_paragraph(feed_description_link, 'Normal')
         doc.add_paragraph()
@@ -474,11 +524,15 @@ def download_bbc_rss_feed(rss_feed_url):
     doc.save(f'../newsfeeds/bbcnews/bbc_news_{topic_name}.docx')
 
     end_time = datetime.datetime.now() - start_time
-    print(f'current bbc news articles saved to ../newsfeeds/bbcnews/bbc_news_{topic_name}.docx - time taken = {end_time}'.upper())
+    sys.stdout.write(
+        f'current bbc news articles saved to ../newsfeeds/bbcnews/bbc_news_{topic_name}.docx - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 
 def download_investing_rss_feed(rss_feed_url):
-    # Download RSS feed data from the BBC and write to a .docx file
+    """Download RSS feed data from investing.com and write to a .docx file.
+    :param rss_feed_url: url of the RSS feed location."""
+
     start_time = datetime.datetime.now()  # Use to time how long the function takes to complete
 
     data = feedparser.parse(rss_feed_url)
@@ -497,7 +551,7 @@ def download_investing_rss_feed(rss_feed_url):
         feed_link = data['entries'][i]['link']
 
         doc.add_paragraph(feed_title_str, 'Heading 3')
-        doc.add_paragraph(feed_pubdate, 'Normal')
+        doc.add_paragraph('Published on ' + feed_pubdate, 'Normal')
         doc.add_paragraph(feed_link, 'Normal')
         doc.add_paragraph()
 
@@ -506,8 +560,9 @@ def download_investing_rss_feed(rss_feed_url):
     doc.save(f'../newsfeeds/investing.com/investingnews.docx')
 
     end_time = datetime.datetime.now() - start_time
-    print(f'current investing.com news articles saved to ../newsfeeds/investing.com/investingnews.docx - time taken = {end_time}'.upper())
-
+    sys.stdout.write(
+        f'current investing.com news articles saved to ../newsfeeds/investing.com/investingnews.docx - time taken = {end_time}'.upper())
+    sys.stdout.flush()
 
 # def download_morningstar_rss_feed(rss_feed_url):
 #     # Download RSS feed data from Morningstar and write to a .docx file
@@ -546,5 +601,3 @@ def download_investing_rss_feed(rss_feed_url):
 ##########################################
 # END
 ##########################################
-
-

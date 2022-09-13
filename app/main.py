@@ -1,5 +1,5 @@
 #! python
-# Main script to run from terminal
+# Main script to run from GUI (or terminal as an alternative)
 
 import functions  # custom-made functions.py file to be used as module
 import threading
