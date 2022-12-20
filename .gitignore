@@ -36,6 +36,7 @@ $RECYCLE.BIN/
 
 # Test files
 tests/test.py
+tests/testui.py
 
 # Txt Files
 *.txt
